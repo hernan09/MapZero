@@ -25,10 +25,10 @@ export class GoogleMapsComponent {
   }
 
   initMap(){
-    let coords=new google.maps.LatLng(45,100);
+    let coords=new google.maps.LatLng(-33,-60.53456);
     let mapsOptions:google.maps.MapOptions={
       center:coords,
-      zoom:14,
+      zoom:7,
       mapTypeId:google.maps.MapTypeId.ROADMAP
     }
     this.map=new google.maps.Map(this.mapElement.nativeElement,mapsOptions)
