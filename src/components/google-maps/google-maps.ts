@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ToastController } from 'ionic-angular';
+import { HttpClient } from '@angular/common/http';
+
 
 /**
  * Generated class for the GoogleMapsComponent component.
@@ -16,8 +18,10 @@ export class GoogleMapsComponent {
 
   @ViewChild('map') mapElement;
   map:any
-  
-  constructor(public toastCtrl: ToastController) {
+  zona:any
+  lat:number
+  lng:number
+  constructor(public toastCtrl: ToastController,public http:HttpClient) {
     
       
     
@@ -26,6 +30,7 @@ export class GoogleMapsComponent {
   ngOnInit(){
     this.initMap();
     this.generateMarker();
+    this.zonasArg()
   }
   
   generateMarker(){
@@ -40,14 +45,17 @@ export class GoogleMapsComponent {
     
     google.maps.event.addListener(marker2, 'dragend', function() {
 
-      
+      this.lat=marker2.getPosition().lat();
+      this.lng=marker2.getPosition().lng();
       alert('Latitud = '+marker2.getPosition().lat()+ ', Longitud = '+marker2.getPosition().lng());
       //const toast = this.toastCtrl.create({
         //message: 'Latitud:'+marker2.getPosition().lat+'longitud:'+marker2.getPosition().lng(),
         //duration: 3000
       //});
       //toast.present();
+      
     });
+    
   }
    
 
@@ -66,11 +74,19 @@ export class GoogleMapsComponent {
       map:this.map,
       position:coords,
       draggable: false,
-      title:'usted se encuentra en '+coords
+      title:'usted se encuentra en '+ coords
       
     })
 
     
+  }
+
+  zonasArg(){
+    //como hacer la bsuqueda dinamica 
+    this.http.get(`https://apis.datos.gob.ar/georef/api/ubicacion?lat=${this.lat}&lon=${this.lng}`).subscribe(res=>{
+    this.zona=res
+    console.log(this.zona)
+    })
   }
 
 }
