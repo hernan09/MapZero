@@ -28,9 +28,9 @@ export class GoogleMapsComponent {
   }
    
   ngOnInit(){
-    this.initMap();
+     this.initMap();
     this.generateMarker();
-    this.zonasArg()
+    
   }
   
   generateMarker(){
@@ -43,22 +43,24 @@ export class GoogleMapsComponent {
       draggable: true
     })
     
-    google.maps.event.addListener(marker2, 'dragend', function() {
+    google.maps.event.addListener(marker2, 'dragend', ()=>{
 
       this.lat=marker2.getPosition().lat();
       this.lng=marker2.getPosition().lng();
-      alert('Latitud = '+marker2.getPosition().lat()+ ', Longitud = '+marker2.getPosition().lng());
+      
+      this.zonasArg()
+      
+      //alert('Latitud = '+marker2.getPosition().lat()+ ', Longitud = '+marker2.getPosition().lng());
       //const toast = this.toastCtrl.create({
         //message: 'Latitud:'+marker2.getPosition().lat+'longitud:'+marker2.getPosition().lng(),
         //duration: 3000
       //});
       //toast.present();
-      
+  
     });
-    
-  }
+  
    
-
+  }
   initMap(){
     
     let coords=new google.maps.LatLng(-33,-60.53456);
@@ -85,7 +87,16 @@ export class GoogleMapsComponent {
     //como hacer la bsuqueda dinamica 
     this.http.get(`https://apis.datos.gob.ar/georef/api/ubicacion?lat=${this.lat}&lon=${this.lng}`).subscribe(res=>{
     this.zona=res
-    console.log(this.zona)
+    console.log(this.zona.ubicacion.departamento)
+    console.log(this.zona.ubicacion.provincia)
+    alert('departamento de :'+JSON.stringify(this.zona.ubicacion.departamento.nombre +' provincia de :'+JSON.stringify(this.zona.ubicacion.provincia.nombre)))
+    })
+    
+  }
+
+  getmarker(){
+    this.http.get(' https://apis.datos.gob.ar/georef/api/provincias').subscribe(data=>{
+      
     })
   }
 
