@@ -8,11 +8,13 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { IntraPage } from '../pages/intra/intra';
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     GoogleMapsComponent,
+    IntraPage
     
   ],
   imports: [
@@ -23,7 +25,8 @@ import { HttpClient } from '@angular/common/http';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    IntraPage
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,47 @@
+#car1{
+ height:50%;
+ background-image: url('../../assets/imgs/medicos.jpg');
+ background-attachment: inherit;
+ background-position: center center;
+ background-repeat: no-repeat;
+ background-size: cover;
+}
+#separador{
+    height: 2px;
+    background-color: white;
+}
+#car2{
+    height:50%;
+   background-color: white;
+}
+#car2>h2{
+    margin-top: 5%;
+    text-align: center;
+    color: black;
+}
+#car2>h2>span{
+    color: #488aff;
+}
+#car2>blockquote>p{
+    color: black;
+}
+#car2>blockquote>footer{
+    color: #488aff;
+}
+#car1>button{
+    width: 50%;
+   position: absolute;
+   left: 25%;
+   top: 20%;
+}
+#car2>button{
+   width: 50%;
+   position: absolute;
+   left: 25%;
+   top: 75%;
+}
+#foter{
+    width: 100%;
+    height: 150px;
+    background-color: black;
+}
