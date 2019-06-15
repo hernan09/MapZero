@@ -27,6 +27,7 @@ export class GoogleMapsComponent {
      this.initMap();
      this.generateMarker();
      this.getmarker();
+     
     
   }
 
@@ -92,9 +93,9 @@ export class GoogleMapsComponent {
 
     this.http.get(`https://apis.datos.gob.ar/georef/api/ubicacion?lat=${this.lat}&lon=${this.lng}`).subscribe(res=>{
 
-    this.zona=res
+      this.zona=res
 
-    alert('departamento de :'+JSON.stringify(this.zona.ubicacion.departamento.nombre +' provincia de :'+JSON.stringify(this.zona.ubicacion.provincia.nombre)))
+      alert('departamento de :'+JSON.stringify(this.zona.ubicacion.departamento.nombre +' provincia de :'+JSON.stringify(this.zona.ubicacion.provincia.nombre)))
     })
     
   }
@@ -104,25 +105,54 @@ export class GoogleMapsComponent {
 
     this.http.get(' https://apis.datos.gob.ar/georef/api/provincias').subscribe((data)=>{
       
-       this.dataMarker=data
+        this.dataMarker=data
       
-       let provincias=this.dataMarker.provincias
-      for(let i = 0;i<=provincias.length-1;i++){
-         this.contador++;
-        let cooords=new google.maps.LatLng(provincias[i].centroide.lat,provincias[i].centroide.lon);
-        let marker2:google.maps.Marker=new google.maps.Marker({
-          map:this.map,
-          title:'dea de urg',
-          position:cooords ,
-          draggable: false
-        })
-        this.borrarMarker(marker2);
+        let provincias=this.dataMarker.provincias
+        for(let i = 0;i<=provincias.length-1;i++){
+        
+
+           let texto=`<h1>${provincias[i].nombre}</h1>`+`<p>${provincias[i].centroide.lat}</p>`+`<p>${provincias[i].centroide.lon}</p>`
+
+           let cooords=new google.maps.LatLng(provincias[i].centroide.lat,provincias[i].centroide.lon);
+
+           let marker2:google.maps.Marker=new google.maps.Marker({
+
+            map:this.map,
+
+            position:cooords ,
+
+            draggable: false
+           })
+            
+           let info= new google.maps.InfoWindow({
+            content:texto
+          })
+          this.borrarMarker(marker2);
+          this.verInfoMarker(marker2,info)
+          this.sacarInfoMarker(marker2,info)
+          
       }
       
        
     })
   }
+
+  verInfoMarker(marker,info){
+    marker.addListener('mouseover',()=>{
+
+      info.open(this.map,marker)
+
+   })
    
-   
-  
+  }
+  sacarInfoMarker(marker,info){
+
+   marker.addListener('mouseout',()=>{
+
+     info.close(this.map,marker)
+
+   })
+
+  }
+
 }
