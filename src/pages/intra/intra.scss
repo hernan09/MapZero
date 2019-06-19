@@ -1,5 +1,5 @@
 #car1{
- height:50%;
+ height:40%;
  background-image: url('../../assets/imgs/medicos.jpg');
  background-attachment: inherit;
  background-position: center center;
@@ -11,7 +11,7 @@
     background-color: white;
 }
 #car2{
-    height:50%;
+   height:60%;
    background-color: white;
 }
 #car2>h2{
@@ -39,4 +39,12 @@
     width: 100%;
     height: 150px;
     background-color: black;
+}
+.spinerIMG{
+    background-image: url('../../assets/imgs/doctorGif.gif');
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+   
 }

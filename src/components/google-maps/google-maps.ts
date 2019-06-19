@@ -95,7 +95,14 @@ export class GoogleMapsComponent {
 
       this.zona=res
 
-      alert('departamento de :'+JSON.stringify(this.zona.ubicacion.departamento.nombre +' provincia de :'+JSON.stringify(this.zona.ubicacion.provincia.nombre)))
+      //alert('departamento de :'+JSON.stringify(this.zona.ubicacion.departamento.nombre +' provincia de :'+JSON.stringify(this.zona.ubicacion.provincia.nombre)))
+
+      const toast = this.toastCtrl.create({
+        message: 'departamento de :'+JSON.stringify(this.zona.ubicacion.departamento.nombre)+' provincia de :'+JSON.stringify(this.zona.ubicacion.provincia.nombre),
+        duration: 3000,
+        position:'Middle'
+      });
+      toast.present();
     })
     
   }
@@ -111,7 +118,17 @@ export class GoogleMapsComponent {
         for(let i = 0;i<=provincias.length-1;i++){
         
 
-           let texto=`<h1>${provincias[i].nombre}</h1>`+`<p>${provincias[i].centroide.lat}</p>`+`<p>${provincias[i].centroide.lon}</p>`
+           let texto=`<ion-item>
+           <ion-thumbnail >
+             <img id="baner" src="../../assets/imgs/doctorGif.gif">
+           </ion-thumbnail>
+           <ion-item-divider>
+              <ion-label>
+                ${provincias[i].centroide.lat}
+              </ion-label>
+           </ion-item-divider>
+           <ion-label>${provincias[i].nombre}</ion-label>
+         </ion-item>`
 
            let cooords=new google.maps.LatLng(provincias[i].centroide.lat,provincias[i].centroide.lon);
 
