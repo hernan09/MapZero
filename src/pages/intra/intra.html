@@ -1,6 +1,31 @@
 <div id="car1">
-    <button ion-button outline (click)="GoToMap()">Go to Map</button>
+  
+  <ion-toolbar id="toolbar" *ngIf="peperoni">
+    <ion-list>
+      <ion-item>
+        <ion-avatar item-start>
+          <ion-icon name="map"></ion-icon>
+        </ion-avatar>
+        <h2>Provincias</h2>
+        <p>vista de provincias</p>
+        <button ion-button item-end outline (click)="GoToMap()">View Provincia</button>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"><ion-icon name="home"></ion-icon> Desde</ion-label>
+        <ion-input [ngModel]="desde"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating"><ion-icon name="car"></ion-icon> Hacia</ion-label>
+        <ion-input [ngModel]="hacia"></ion-input>
+      </ion-item>
+      <ion-item>
+        <button id="go" ion-button  outline >GO</button>
+      </ion-item>
+    </ion-list>
+  </ion-toolbar>
 </div>
+
 <div id="separador"></div>
 <div *ngIf="!peperoni" id="car2">
   <h2><span>U</span>RGMAP</h2>
@@ -25,9 +50,6 @@
     </ion-item>
   
  <ion-toolbar color="primary">
-  <ion-tabs>
-    <ion-tab tabIcon="heart" [root]="tab1"></ion-tab>
-    <ion-tab tabIcon="star" [root]="tab2"></ion-tab>
-  </ion-tabs>`
+    
  </ion-toolbar>
 </ion-footer>

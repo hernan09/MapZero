@@ -9,6 +9,9 @@ import { HomePage } from '../pages/home/home';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { IntraPage } from '../pages/intra/intra';
+import { Vibration } from '@ionic-native/vibration';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -33,6 +36,8 @@ import { IntraPage } from '../pages/intra/intra';
     SplashScreen,
     HttpClientModule,
     HttpClient,
+    Vibration,
+    LaunchNavigator,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -7,11 +7,13 @@ import { IntraPage } from '../intra/intra';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+    
   constructor(public navCtrl: NavController) {
 
   }
+  
   gotoIntra(){
+
     this.navCtrl.push(IntraPage)
   }
 }
