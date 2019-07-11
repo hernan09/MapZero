@@ -20,7 +20,7 @@
         <ion-input [ngModel]="hacia"></ion-input>
       </ion-item>
       <ion-item>
-        <button id="go" ion-button  outline >GO</button>
+        <button id="go" ion-button  full >GO</button>
       </ion-item>
     </ion-list>
   </ion-toolbar>
@@ -46,10 +46,15 @@
     <ion-item>
       <ion-label *ngIf="peperoni">Google Map</ion-label>
       <ion-label *ngIf="!peperoni">URG</ion-label>
-      <ion-toggle (ionChange)="change($event)" [(ngModel)]="peperoni"></ion-toggle>
+      <ion-toggle [(ngModel)]="peperoni"></ion-toggle>
     </ion-item>
   
- <ion-toolbar color="primary">
-    
+ <ion-toolbar>
+  <ion-tabs>
+    <ion-tab tabIcon="contact" [root]="tab1"></ion-tab>
+    <ion-tab tabIcon="compass" [root]="tab2"></ion-tab>
+    <ion-tab tabIcon="analytics" [root]="tab3"></ion-tab>
+    <ion-tab tabIcon="settings" [root]="tab4"></ion-tab>
+  </ion-tabs>`
  </ion-toolbar>
 </ion-footer>

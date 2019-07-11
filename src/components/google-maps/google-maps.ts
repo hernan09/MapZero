@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { ToastController } from 'ionic-angular';
+import { ToastController, NavController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Vibration } from '@ionic-native/vibration';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
-
+import { Title } from '@angular/platform-browser';
+import { _ParseAST } from '@angular/compiler';
+import { HomePage } from '../../pages/home/home';
 
 
 @Component({
@@ -22,7 +24,11 @@ export class GoogleMapsComponent {
   contador:number
   desde:string
   hacia:string
-  constructor(public toastCtrl: ToastController,public http:HttpClient,private vibration: Vibration,private launchNavigator: LaunchNavigator) {
+  polilyne:any
+  poliOption:any
+  directionDisplay:any
+  directionService:any
+  constructor(public toastCtrl: ToastController,public http:HttpClient,private vibration: Vibration,private launchNavigator: LaunchNavigator,public navctrl:NavController) {
     
 
   }
@@ -30,6 +36,7 @@ export class GoogleMapsComponent {
   ngOnInit(){
 
      this.initMap();
+
      this.generateMarker();
      
      //this.getmarker();
@@ -68,27 +75,54 @@ export class GoogleMapsComponent {
       this.lat=marker2.getPosition().lat();
       this.lng=marker2.getPosition().lng();
 
-      this.vibration.vibrate(1000);
+     
 
       this.zonasArg()
-      
+
+      //this.navctrl.push(HomePage)
       
     });
   
   }
   initMap(){
     
-    let coords=new google.maps.LatLng(-53,-60.53456);
+    let coords=new google.maps.LatLng(-42,-66.53456);
+
+    let coords2=new google.maps.LatLng(-45,-67.53456); 
 
     let mapsOptions:google.maps.MapOptions={
       center:coords,
       mapTypeControl: true,
       zoom:3,
       fullscreenControl:false,
-      mapTypeId:google.maps.MapTypeId.ROADMAP
+      
+      mapTypeId:google.maps.MapTypeId.HYBRID
     }
 
     this.map=new google.maps.Map(this.mapElement.nativeElement,mapsOptions)
+    
+   
+
+    let objconfigDS = {
+       origin:coords,
+       destination:coords2,
+       travelMode:google.maps.TravelMode.DRIVING
+    }
+
+    this.directionService = new google.maps.DirectionsService();
+
+    this.directionDisplay = new google.maps.DirectionsRenderer({
+      map:this.map
+    });
+
+    this.directionService.route(objconfigDS, (response, status) => {
+      console.log("callback route")
+      if (status === 'OK') {
+        this.directionDisplay.setDirections(response)
+      }
+    })
+  
+    
 
     let marker: google.maps.Marker=new google.maps.Marker({
       map:this.map,
@@ -100,6 +134,40 @@ export class GoogleMapsComponent {
 
   }
 
+  trazarRuta(){
+
+    const coords2 = new google.maps.LatLng(-46,-67.53456);
+
+    this.map.addListener('click',()=>{
+
+    console.log('coords',coords2)
+
+      this.polilyne=new google.maps.Polyline({
+        strokeColor:'#000000',
+        strokeOpacity: 1.0,
+        strokeWeight: 3,
+        visible:true
+      })
+
+      this.polilyne.setMap(this.map)
+       
+      let path = this.polilyne.getPath(); 
+      
+      path.push(coords2)
+
+      console.log(path)
+
+      let marker3 = new google.maps.Marker({
+        position:coords2,
+        title:'hasta aca sigue la ruta',
+        map:this.map
+        
+      })
+    })
+   
+  }
+
+
   zonasArg(){
 
     this.http.get(`https://apis.datos.gob.ar/georef/api/ubicacion?lat=${this.lat}&lon=${this.lng}`).subscribe(res=>{
@@ -108,6 +176,7 @@ export class GoogleMapsComponent {
 
       //alert('departamento de :'+JSON.stringify(this.zona.ubicacion.departamento.nombre +' provincia de :'+JSON.stringify(this.zona.ubicacion.provincia.nombre)))
        if(this.zona.ubicacion.departamento.nombre==null){
+        this.vibration.vibrate(1000);
         const toast = this.toastCtrl.create({
           message: 'la App no funciona fuera de Argentina',
           duration: 3000,
